@@ -3,6 +3,7 @@ Guildstrike es una plataforma web de gestión de torneos de e-Sports enfocado en
 
 # Arquitectura de la aplicación
 
+```text
 Guildstrike/
 ├── backend/
 │   ├── config/
@@ -47,5 +48,6 @@ Guildstrike/
         ├── login.html
         ├── homepage.html
         └── brackets.html
+```
 
 # Funcionamiento
