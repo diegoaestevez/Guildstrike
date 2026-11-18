@@ -20,16 +20,22 @@ Guildstrike/
 │   │   ├── uploadMiddleware.js
 │   │   └── errorHandler.js
 │   ├── models/
-│   │   ├── Usuario.js
-│   │   ├── Torneo.js
-│   │   ├── Equipo.js
-│   │   ├── Ronda.js
-│   │   ├── Partida.js
-│   │   ├── Evidencia.js
+│   │   ├── Administrador.js
+│   │   ├── Arbitro.js
+│   │   ├── Capitan.js
 │   │   ├── Disputa.js
-│   │   ├── ReporteResultado.js
+│   │   ├── Equipo.js
 │   │   ├── EventoPartida.js
-│   │   └── Notificacion.js
+│   │   ├── Evidencia.js
+│   │   ├── index.js
+│   │   ├── Integrante.js
+│   │   ├── Notificacion.js
+│   │   ├── Partida.js
+│   │   ├── ReporteResultado.js
+│   │   ├── Ronda.js
+│   │   ├── Ticket.js
+│   │   ├── Torneo.js
+│   │   └── Usuario.js
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── torneoRoutes.js
