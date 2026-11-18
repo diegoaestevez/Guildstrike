@@ -1,3 +1,4 @@
+// baja cohesion: aparte del roster expone comportamiento de presentacion del bracket
 class Equipo {
   constructor(id, nombre, capitan) {
     if (!id || !nombre || !capitan) {

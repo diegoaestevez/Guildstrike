@@ -1,5 +1,5 @@
 const Usuario = require('./Usuario');
-
+// baja cohesion porque mezcla administración de usuarios, configuración y consulta de auditoria en una sola clase.
 class Administrador extends Usuario {
   constructor(id, nombre, correo) {
     super(id, nombre, correo);

@@ -33,7 +33,6 @@ Guildstrike/
 │   │   ├── Partida.js
 │   │   ├── ReporteResultado.js
 │   │   ├── Ronda.js
-│   │   ├── Ticket.js
 │   │   ├── Torneo.js
 │   │   └── Usuario.js
 │   ├── routes/

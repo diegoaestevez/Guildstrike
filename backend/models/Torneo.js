@@ -1,5 +1,6 @@
 const Ronda = require('./Ronda');
-
+// OCP, para el formato esta en puros ifs y se requiere modificar la clase para agregar un nuevo formato
+// tambien alto acoplamiento porque crea rondas y conoce detalles de las partidas
 class Torneo {
   constructor(id, nombre, configuracion = {}) {
     this.id = id;

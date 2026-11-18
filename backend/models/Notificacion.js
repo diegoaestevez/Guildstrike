@@ -1,3 +1,4 @@
+// alto acoplamiento: conoce directamente la forma concreta de un webhook de Discord
 class Notificacion {
   constructor(discordWebhook, destinatarios, tipo, contenido) {
     if (!discordWebhook || typeof discordWebhook.send !== 'function') {

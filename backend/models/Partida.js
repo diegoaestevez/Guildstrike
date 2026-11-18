@@ -2,7 +2,7 @@ const ReporteResultado = require('./ReporteResultado');
 const Evidencia = require('./Evidencia');
 const EventoPartida = require('./EventoPartida');
 const Disputa = require('./Disputa');
-
+// baja cohesion SRP: la clase tiene varias razones de cambio y tambien DIP porque construye los colaboradores concretos en lugar de recibirlos como dependencias
 class Partida {
   constructor(id, equipoA, equipoB, fechaProgramada) {
     if (!equipoA || !equipoB || equipoA === equipoB) {
