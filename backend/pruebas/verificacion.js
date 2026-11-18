@@ -4,6 +4,7 @@
 // Uso: node backend/pruebas/verificacion.js
 
 const Notificacion = require('../models/Notificacion');
+const NotificadorDiscord = require('../services/NotificadorDiscord');
 
 const resultados = [];
 
@@ -38,7 +39,7 @@ caso('V-08a', 'RF-08', 'Correcto',
   'El aviso se envía y queda ENVIADA',
   () => {
     const webhook = webhookDePrueba();
-    const aviso = new Notificacion(webhook, ['Equipo A', 'Equipo B'], 'PARTIDA_PROGRAMADA', 'Partida el 20/11 a las 18:00');
+    const aviso = new Notificacion(new NotificadorDiscord(webhook), ['Equipo A', 'Equipo B'], 'PARTIDA_PROGRAMADA', 'Partida el 20/11 a las 18:00');
     aviso.enviarWebhook();
     return aviso.estado === 'ENVIADA' && webhook.recibidos.length === 1 && aviso.intentos === 1;
   });
@@ -48,7 +49,7 @@ caso('V-08b', 'RF-08', 'Error',
   'El aviso queda FALLIDA, se guarda el fallo y se puede reintentar',
   () => {
     const webhook = webhookDePrueba({ responde: false });
-    const aviso = new Notificacion(webhook, ['Equipo A', 'Equipo B'], 'PARTIDA_PROGRAMADA', 'Partida el 20/11 a las 18:00');
+    const aviso = new Notificacion(new NotificadorDiscord(webhook), ['Equipo A', 'Equipo B'], 'PARTIDA_PROGRAMADA', 'Partida el 20/11 a las 18:00');
     let lanzoError = false;
     try {
       aviso.enviarWebhook();

@@ -1,10 +1,10 @@
-// alto acoplamiento: conoce directamente la forma concreta de un webhook de Discord
+// R-01: ya no conoce a Discord, recibe cualquier notificador (DIP)
 class Notificacion {
-  constructor(discordWebhook, destinatarios, tipo, contenido) {
-    if (!discordWebhook || typeof discordWebhook.send !== 'function') {
-      throw new Error('Se requiere un webhook de Discord compatible');
+  constructor(notificador, destinatarios, tipo, contenido) {
+    if (!notificador || typeof notificador.enviar !== 'function') {
+      throw new Error('Se requiere un notificador compatible');
     }
-    this.discordWebhook = discordWebhook;
+    this.notificador = notificador;
     this.destinatarios = destinatarios;
     this.tipo = tipo;
     this.contenido = contenido;
@@ -16,7 +16,7 @@ class Notificacion {
   enviarWebhook() {
     this.intentos += 1;
     try {
-      const resultado = this.discordWebhook.send({
+      const resultado = this.notificador.enviar({
         destinatarios: this.destinatarios,
         tipo: this.tipo,
         contenido: this.contenido
@@ -26,7 +26,7 @@ class Notificacion {
     } catch (error) {
       this.estado = 'FALLIDA';
       this.fallos.push({ fecha: new Date(), mensaje: error.message });
-      throw new Error(`Falló el webhook de Discord: ${error.message}`);
+      throw new Error(`Falló el envío de la notificación: ${error.message}`);
     }
   }
 
