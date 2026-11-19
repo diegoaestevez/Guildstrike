@@ -9,7 +9,6 @@ module.exports = {
   Ronda: require('./Ronda'),
   Partida: require('./Partida'),
   Disputa: require('./Disputa'),
-  Ticket: require('./Ticket'),
   ReporteResultado: require('./ReporteResultado'),
   Evidencia: require('./Evidencia'),
   EventoPartida: require('./EventoPartida'),
