@@ -1,5 +1,6 @@
 const Usuario = require('./Usuario');
-// baja cohesion porque mezcla administración de usuarios, configuración y consulta de auditoria en una sola clase.
+const Bitacora = require('./Bitacora');
+// R-03: la bitácora salió a su propia clase; Administrador solo le pide que registre (SRP)
 class Administrador extends Usuario {
   constructor(id, nombre, correo) {
     super(id, nombre, correo);
@@ -10,7 +11,7 @@ class Administrador extends Usuario {
       tamanoMaximoEvidenciaBytes: 5 * 1024 * 1024,
       formatosEvidencia: ['image/png', 'image/jpeg']
     };
-    this.bitacora = [];
+    this.bitacora = new Bitacora();
   }
 
   registrarUsuario(usuario) {
@@ -18,17 +19,17 @@ class Administrador extends Usuario {
       throw new Error('El usuario ya está registrado');
     }
     this.usuarios.push(usuario);
-    this.bitacora.push({ tipo: 'USUARIO_REGISTRADO', usuarioId: usuario.id, fecha: new Date() });
+    this.bitacora.registrar('USUARIO_REGISTRADO', { usuarioId: usuario.id });
     return usuario;
   }
 
   actualizarConfiguracion(cambios) {
     Object.assign(this.configuracion, cambios);
-    this.bitacora.push({ tipo: 'CONFIGURACION_ACTUALIZADA', fecha: new Date() });
+    this.bitacora.registrar('CONFIGURACION_ACTUALIZADA');
   }
 
   consultarBitacora() {
-    return this.bitacora.slice();
+    return this.bitacora.consultar();
   }
 }
 

@@ -3,6 +3,7 @@ module.exports = {
   Capitan: require('./Capitan'),
   Arbitro: require('./Arbitro'),
   Administrador: require('./Administrador'),
+  Bitacora: require('./Bitacora'),
   Integrante: require('./Integrante'),
   Equipo: require('./Equipo'),
   Torneo: require('./Torneo'),
