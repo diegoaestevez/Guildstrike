@@ -1,5 +1,5 @@
 const Ronda = require('./Ronda');
-// OCP, para el formato esta en puros ifs y se requiere modificar la clase para agregar un nuevo formato
+// R-02: Torneo ya no pregunta por el formato; cada formato es una subclase que arma sus emparejamientos (OCP)
 // tambien alto acoplamiento porque crea rondas y conoce detalles de las partidas
 class Torneo {
   constructor(id, nombre, configuracion = {}) {
@@ -44,21 +44,15 @@ class Torneo {
     if (this.rondas.length && !this.rondas[this.rondas.length - 1].estaCompleta()) {
       throw new Error('La ronda anterior aún no está completa');
     }
-    if (this.configuracion.formato !== undefined
-      && this.configuracion.formato !== 'eliminacion-simple') {
-      throw new Error('Formato de torneo no soportado');
-    }
     const ronda = new Ronda(numero);
-    const equipos = this.equipos.slice();
-    for (let indice = 0; indice < equipos.length - 1; indice += 2) {
-      ronda.agregarPartida(equipos[indice], equipos[indice + 1], new Date());
-    }
-    if (equipos.length % 2 === 1) {
-      const pase = equipos[equipos.length - 1];
-      ronda.paseAutomatico = pase;
-    }
+    this.armarEmparejamientos(ronda, this.equipos.slice());
     this.rondas.push(ronda);
     return ronda;
+  }
+
+  // R-02: cada formato lo implementa en su subclase (por ejemplo TorneoEliminacionSimple)
+  armarEmparejamientos(ronda, equipos) {
+    throw new Error('Formato de torneo no soportado');
   }
 }
 

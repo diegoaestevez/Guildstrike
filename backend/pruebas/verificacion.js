@@ -22,6 +22,15 @@ try {
 }
 const canalDeAvisos = (webhook) => (NotificadorDiscord ? new NotificadorDiscord(webhook) : webhook);
 
+// En v1-antes el torneo de eliminación simple es Torneo; desde R-02 es la subclase
+// TorneoEliminacionSimple. Solo se ignora que el archivo no exista, cualquier otro error truena.
+let TorneoDeLaPrueba = Torneo;
+try {
+  TorneoDeLaPrueba = require('../models/TorneoEliminacionSimple');
+} catch (error) {
+  if (error.code !== 'MODULE_NOT_FOUND') throw error;
+}
+
 const resultados = [];
 
 function caso(id, rf, tipo, prueba) {
@@ -74,25 +83,25 @@ function captura(equipo, tipo, minutos) {
 
 // RF-01: el capitán inscribe a su equipo en un torneo activo.
 caso('V-01a', 'RF-01', 'Correcto', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   torneo.inscribirEquipo(crearEquipo('Alpha', 4));
   return torneo.equipos.length === 1;
 });
 caso('V-01b', 'RF-01', 'Error', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   const rechazada = lanzaError(() => torneo.inscribirEquipo(crearEquipo('Alpha', 3)), 'debe tener entre 4 y 9 integrantes');
   return rechazada && torneo.equipos.length === 0;
 });
 
 // RF-02: al cerrar inscripciones se genera la estructura de llaves.
 caso('V-02a', 'RF-02', 'Correcto', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   ['A', 'B', 'C', 'D'].forEach((nombre) => torneo.inscribirEquipo(crearEquipo(nombre)));
   const ronda = torneo.cerrarInscripciones();
   return torneo.estado === 'EN_CURSO' && ronda.numero === 1 && ronda.partidas.length === 2;
 });
 caso('V-02b', 'RF-02', 'Error', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   ['A', 'B', 'C'].forEach((nombre) => torneo.inscribirEquipo(crearEquipo(nombre)));
   const rechazado = lanzaError(() => torneo.cerrarInscripciones(), 'Se requieren al menos 4 equipos');
   return rechazado && torneo.estado === 'ACTIVO';
@@ -100,7 +109,7 @@ caso('V-02b', 'RF-02', 'Error', () => {
 
 // RF-03: se programa el horario y el rival de cada partida.
 caso('V-03a', 'RF-03', 'Correcto', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   const [a, b, c, d] = ['A', 'B', 'C', 'D'].map((nombre) => crearEquipo(nombre));
   [a, b, c, d].forEach((equipo) => torneo.inscribirEquipo(equipo));
   const [p1, p2] = torneo.cerrarInscripciones().partidas;
@@ -109,7 +118,7 @@ caso('V-03a', 'RF-03', 'Correcto', () => {
     && conFecha(p1) && conFecha(p2);
 });
 caso('V-03b', 'RF-03', 'Error', () => {
-  const torneo = new Torneo('t1', 'Copa ITESO');
+  const torneo = new TorneoDeLaPrueba('t1', 'Copa ITESO');
   const equipos = ['A', 'B', 'C', 'D', 'E'].map((nombre) => crearEquipo(nombre));
   equipos.forEach((equipo) => torneo.inscribirEquipo(equipo));
   const ronda = torneo.cerrarInscripciones();

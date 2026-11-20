@@ -6,6 +6,7 @@ module.exports = {
   Integrante: require('./Integrante'),
   Equipo: require('./Equipo'),
   Torneo: require('./Torneo'),
+  TorneoEliminacionSimple: require('./TorneoEliminacionSimple'),
   Ronda: require('./Ronda'),
   Partida: require('./Partida'),
   Disputa: require('./Disputa'),
