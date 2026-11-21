@@ -1,5 +1,6 @@
 const Usuario = require('./Usuario');
 const Bitacora = require('./Bitacora');
+const { LIMITE_EVIDENCIA_MINUTOS, TAMANO_MAXIMO_EVIDENCIA_BYTES, FORMATOS_EVIDENCIA } = require('../config/limitesEvidencia');
 // R-03: la bitácora salió a su propia clase; Administrador solo le pide que registre (SRP)
 class Administrador extends Usuario {
   constructor(id, nombre, correo) {
@@ -7,9 +8,9 @@ class Administrador extends Usuario {
     this.rol = 'ADMINISTRADOR';
     this.usuarios = [];
     this.configuracion = {
-      limiteEvidenciaMinutos: 5,
-      tamanoMaximoEvidenciaBytes: 5 * 1024 * 1024,
-      formatosEvidencia: ['image/png', 'image/jpeg']
+      limiteEvidenciaMinutos: LIMITE_EVIDENCIA_MINUTOS,
+      tamanoMaximoEvidenciaBytes: TAMANO_MAXIMO_EVIDENCIA_BYTES,
+      formatosEvidencia: [...FORMATOS_EVIDENCIA]
     };
     this.bitacora = new Bitacora();
   }

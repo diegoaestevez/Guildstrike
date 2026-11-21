@@ -1,4 +1,5 @@
 const Ronda = require('./Ronda');
+const { LIMITE_EVIDENCIA_MINUTOS, TAMANO_MAXIMO_EVIDENCIA_BYTES, FORMATOS_EVIDENCIA } = require('../config/limitesEvidencia');
 // R-02: Torneo ya no pregunta por el formato; cada formato es una subclase que arma sus emparejamientos (OCP)
 // tambien alto acoplamiento porque crea rondas y conoce detalles de las partidas
 class Torneo {
@@ -9,9 +10,9 @@ class Torneo {
     this.equipos = [];
     this.rondas = [];
     this.configuracion = {
-      limiteEvidenciaMinutos: 5,
-      tamanoMaximoEvidenciaBytes: 5 * 1024 * 1024,
-      formatosEvidencia: ['image/png', 'image/jpeg'],
+      limiteEvidenciaMinutos: LIMITE_EVIDENCIA_MINUTOS,
+      tamanoMaximoEvidenciaBytes: TAMANO_MAXIMO_EVIDENCIA_BYTES,
+      formatosEvidencia: [...FORMATOS_EVIDENCIA],
       ...configuracion
     };
   }

@@ -1,3 +1,5 @@
+const { LIMITE_EVIDENCIA_MINUTOS, TAMANO_MAXIMO_EVIDENCIA_BYTES, FORMATOS_EVIDENCIA } = require('../config/limitesEvidencia');
+
 class Evidencia {
   constructor({ nombre, tipo, tamanoBytes, fechaCarga = new Date(), contenido }) {
     if (!nombre || !tipo || !Number.isInteger(tamanoBytes) || tamanoBytes < 0) {
@@ -11,9 +13,9 @@ class Evidencia {
   }
 
   validar(reglas, fechaFin) {
-    const formatos = reglas.formatosEvidencia || ['image/png', 'image/jpeg'];
-    const maximo = reglas.tamanoMaximoEvidenciaBytes || 5 * 1024 * 1024;
-    const limiteMinutos = reglas.limiteEvidenciaMinutos || 5;
+    const formatos = reglas.formatosEvidencia || FORMATOS_EVIDENCIA;
+    const maximo = reglas.tamanoMaximoEvidenciaBytes || TAMANO_MAXIMO_EVIDENCIA_BYTES;
+    const limiteMinutos = reglas.limiteEvidenciaMinutos || LIMITE_EVIDENCIA_MINUTOS;
     const minutos = (this.fechaCarga.getTime() - new Date(fechaFin).getTime()) / 60000;
     if (!formatos.includes(this.tipo)) {
       throw new Error('La evidencia debe ser PNG o JPG');
