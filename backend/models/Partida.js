@@ -76,10 +76,7 @@ class Partida {
     if (this.disputa) {
       throw new Error('La partida ya tiene una disputa');
     }
-    this.disputa = new Disputa(this, solicitante, motivo);
-    this.estado = 'CONGELADA';
-    this._registrar('DISPUTA_ABIERTA', solicitante, motivo);
-    return this.disputa;
+    return this._congelarConDisputa(solicitante, motivo);
   }
 
   aplicarDictamen(disputa) {
@@ -104,9 +101,15 @@ class Partida {
       this._registrar('RESULTADO_VALIDADO', null, 'Los capitanes coincidieron');
       return;
     }
-    this.disputa = new Disputa(this, segundo.capitan, 'Marcadores discrepantes');
+    this._congelarConDisputa(segundo.capitan, 'Marcadores discrepantes');
+  }
+
+  // R-04: abrir la disputa y congelar la partida vive en un solo método; antes estaba copiado en abrirDisputa y _validarReportes
+  _congelarConDisputa(solicitante, motivo) {
+    this.disputa = new Disputa(this, solicitante, motivo);
     this.estado = 'CONGELADA';
-    this._registrar('DISPUTA_ABIERTA', segundo.capitan, 'Marcadores discrepantes');
+    this._registrar('DISPUTA_ABIERTA', solicitante, motivo);
+    return this.disputa;
   }
 
   _exigirNoCongelada() {
