@@ -47,29 +47,34 @@ Guildstrike/
 │   └── uploads/
 │       └── .gitkeep
 │
-└── frontend/
-    ├── assets/
-    │   ├── css/
-    │   │   ├── main.css
-    │   │   └── brackets.css
-    │   ├── js/
-    │   │   ├── api.js
-    │   │   ├── utils.js
-    │   │   └── ui.js
-    │   └── img/
-    │       └── logo.png
-    ├── controllers/
-    │   ├── authClientCtrl.js
-    │   ├── torneoClientCtrl.js
-    │   ├── partidaClientCtrl.js
-    │   └── arbitroClientCtrl.js
-    └── views/
-        ├── index.html
-        ├── login.html
-        ├── dashboard_capitan.html
-        ├── dashboard_arbitro.html
-        ├── dashboard_admin.html
-        └── brackets.html
+└── frontend/                     Vite + React + TypeScript (ver frontend/README.md)
+    ├── CONTRATO-API.md            rutas, cuerpos, respuestas y errores que espera el front
+    ├── README.md                  arquitectura, decisiones de diseño y cómo correrlo
+    ├── index.html
+    ├── public/
+    └── src/
+        ├── main.tsx               arma los repositorios y monta la interfaz
+        ├── dominio/               tipos espejo del backend y reglas puras
+        ├── aplicacion/            puertos (interfaces por agregado) y errores
+        ├── infraestructura/
+        │   ├── http/              cliente fetch, DTO y mapeos a dominio
+        │   ├── memoria/           backend simulado con las reglas del modelo y datos semilla
+        │   └── contenedor.ts      raíz de composición: elige el adaptador
+        └── ui/                    proveedores, sistema visual, páginas y rutas
 ```
+
+# Cómo correr el front
+
+```bash
+cd frontend
+npm install
+npm run dev        # http://localhost:5173, con el backend simulado en memoria
+```
+
+Desde la raíz: `npm run front:dev`, `npm run front:build` (compila a `frontend/dist`, que sirve
+Express con `npm start`) y `npm run front:test`. La fuente de datos se decide al compilar: sin
+variable, el front usa el backend simulado en memoria, también en el `dist` que sirve Express; con
+`VITE_FUENTE_DATOS=api` llama al backend en `http://localhost:3000`, y así hay que compilarlo cuando
+exista la API del contrato. Detalle en `frontend/README.md`.
 
 # Funcionamiento

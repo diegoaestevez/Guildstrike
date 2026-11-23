@@ -15,7 +15,9 @@ const puerto = Number(process.env.PORT) || 3000;
 
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '../frontend')));
+// El front se compila con Vite en frontend/dist (npm run front:build); en desarrollo lo sirve Vite en :5173
+const carpetaFront = path.resolve(__dirname, '../frontend/dist');
+app.use(express.static(carpetaFront));
 app.use('/backend/uploads', express.static(path.resolve(__dirname, 'uploads')));
 
 app.get('/api/health', (req, res) => {
@@ -25,6 +27,12 @@ app.get('/api/health', (req, res) => {
     estado: baseDatosConectada ? 'activo' : 'base de datos no disponible',
     baseDatos: baseDatosConectada ? 'conectada' : 'desconectada'
   });
+});
+
+// Las rutas del navegador (/torneos/..., /partidas/...) las resuelve React Router en el cliente:
+// cualquier GET que no sea de /api ni de /backend/uploads recibe el index.html del front, para que recargar funcione
+app.get(/^\/(?!api(?:\/|$)|backend\/uploads(?:\/|$)).*/, (req, res) => {
+  res.sendFile(path.join(carpetaFront, 'index.html'));
 });
 
 async function iniciarServidor() {
