@@ -28,9 +28,33 @@
   --font-datos: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
+/* Tema claro: los mismos tokens con otros valores, así que ningún componente cambia. El oro y los
+   colores de estado se oscurecen para que su texto pase 4.5:1 sobre blanco, y el texto de los
+   botones de oro (text-fondo) queda claro sobre el oro oscuro. Lo activa data-tema en <html>. */
+:root[data-tema='claro'] {
+  --color-fondo: #f4f5f7;
+  --color-superficie: #ffffff;
+  --color-elevada: #eef1f5;
+  --color-borde: #d5dbe3;
+  --color-texto: #121821;
+  --color-texto-2: #556170;
+  --color-oro: #8a5c00;
+
+  --color-programada: #5a6880;
+  --color-en-curso: #1f62d6;
+  --color-finalizada: #1b7a4c;
+  --color-congelada: #0a6f99;
+  --color-auditada: #6d45c9;
+  --color-abierto: #c23434;
+}
+
 @layer base {
   html {
     color-scheme: dark;
+  }
+
+  html[data-tema='claro'] {
+    color-scheme: light;
   }
 
   body {

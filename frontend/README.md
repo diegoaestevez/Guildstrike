@@ -130,8 +130,10 @@ distintos en la programada; y como árbitro resuelve las disputas y genera la ro
 
 ## Sistema visual
 
-Tema oscuro con un solo acento (oro, para la acción principal y lo activo) y un color por estado,
-siempre acompañado de su nombre e ícono. Los tokens están en `src/ui/tema.css` con `@theme` de
+Dos temas, oscuro y claro, con un solo acento (oro, para la acción principal y lo activo) y un color
+por estado, siempre acompañado de su nombre e ícono. El botón del encabezado cambia de tema y lo
+recuerda; la primera vez se usa el del sistema. El tema claro redefine los mismos tokens bajo
+`data-tema="claro"`, así que ningún componente sabe en qué tema está. Los tokens están en `src/ui/tema.css` con `@theme` de
 Tailwind v4, que además borra la paleta de Tailwind: solo existen los colores del sistema. Títulos en
 Chakra Petch, texto en IBM Plex Sans y datos de trazabilidad (ids, marcadores, horas, eventos) en
 IBM Plex Mono. El contraste se midió en el navegador, componiendo cada fondo semitransparente: de

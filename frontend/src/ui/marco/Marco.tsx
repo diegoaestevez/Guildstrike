@@ -2,6 +2,7 @@ import { FlaskConical, Swords } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import { ROL } from '../presentacion'
 import { useSesion } from '../proveedores/contextos'
+import { BotonTema } from './BotonTema'
 import { navegacionPara, type EntradaNavegacion } from './navegacion'
 import { SelectorSesion } from './SelectorSesion'
 
@@ -70,8 +71,11 @@ export function Marco() {
           </div>
           <div className="flex w-full min-w-0 flex-wrap items-center gap-x-3 gap-y-2 sm:w-auto">
             <span className="hidden text-sm text-texto-2 md:inline">{ROL[usuario.rol]}</span>
-            <div className="w-full min-w-0 sm:w-auto">
-              <SelectorSesion />
+            <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto">
+              <div className="min-w-0 flex-1">
+                <SelectorSesion />
+              </div>
+              <BotonTema />
             </div>
           </div>
         </div>

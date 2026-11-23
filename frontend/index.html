@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // El tema se pone antes de pintar para que no parpadee: el que eligió el usuario o, si no
+      // eligió, el de su sistema. Lo cambia el botón del encabezado (src/ui/tema.ts).
+      try {
+        var tema = localStorage.getItem('guildstrike.tema')
+        if (tema !== 'claro' && tema !== 'oscuro') {
+          tema = matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'oscuro'
+        }
+        document.documentElement.dataset.tema = tema
+      } catch (error) {
+        document.documentElement.dataset.tema = 'oscuro'
+      }
+    </script>
     <meta name="description" content="Guildstrike: gestión de torneos de e-sports con trazabilidad de cada partida." />
     <title>Guildstrike</title>
   </head>
