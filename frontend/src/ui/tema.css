@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+/* Sistema visual de Guildstrike. Solo existen estos colores y fuentes: se borran los de
+   Tailwind para que nadie use un color fuera del sistema por accidente. */
+@theme {
+  --color-*: initial;
+  --color-fondo: #0e1116;
+  --color-superficie: #161b22;
+  --color-elevada: #1d2430;
+  --color-borde: #2a3341;
+  --color-texto: #e6eaf0;
+  --color-texto-2: #9aa4b2;
+  /* Un solo acento: la acción principal y lo activo. */
+  --color-oro: #e8b04b;
+
+  /* Un color por estado, siempre acompañado de su nombre. */
+  --color-programada: #8d9bb3;
+  --color-en-curso: #4c8dff;
+  --color-finalizada: #3fb27f;
+  --color-congelada: #5bc0eb;
+  --color-auditada: #a78bfa;
+  --color-abierto: #f06a6a;
+
+  --font-*: initial;
+  --font-titulo: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+  --font-texto: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  /* Datos de trazabilidad: ids, marcadores, horas y eventos. */
+  --font-datos: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-fondo font-texto text-texto antialiased;
+    min-width: 320px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-oro);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-oro) 35%, transparent);
+  }
+}
