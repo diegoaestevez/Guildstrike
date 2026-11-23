@@ -1,0 +1,76 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  },
+  "overrides": [
+    {
+      "files": ["src/dominio/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              { "name": "react", "message": "El dominio no conoce React: solo datos y reglas puras." },
+              { "name": "@tanstack/react-query", "message": "El dominio no conoce el estado del servidor." },
+              { "name": "react-router", "message": "El dominio no conoce la navegación." }
+            ],
+            "patterns": [
+              {
+                "group": ["**/aplicacion/**", "**/infraestructura/**", "**/ui/**"],
+                "message": "El dominio es la capa más interna: no importa de ninguna otra."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/aplicacion/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [{ "name": "react", "message": "Los puertos no conocen React." }],
+            "patterns": [
+              {
+                "group": ["**/infraestructura/**", "**/ui/**"],
+                "message": "La aplicación define puertos; no conoce sus implementaciones ni la interfaz."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/infraestructura/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [{ "name": "react", "message": "Los adaptadores no conocen React." }],
+            "patterns": [{ "group": ["**/ui/**"], "message": "Los adaptadores no conocen la interfaz." }]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/ui/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infraestructura/**"],
+                "message": "La interfaz recibe los repositorios por contexto (ui/proveedores); solo main.tsx conoce el contenedor."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
